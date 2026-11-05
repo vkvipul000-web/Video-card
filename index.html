@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#650d22">
+  <title>Wedding Invitation | Sunil & Priya</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --maroon: #650d22;
+      --maroon-dark: #3d0715;
+      --gold: #b08a42;
+      --gold-light: #e7d6a7;
+      --cream: #f5f0df;
+      --ink: #4a321d;
+      --paper: url("assets/cream-gold-background.jpg");
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Cormorant Garamond", "Noto Serif Devanagari", serif;
+      background-color: var(--cream);
+      background-image: var(--paper);
+      background-repeat: repeat-y;
+      background-position: center top;
+      background-size: 100% auto;
+      overflow-x: hidden;
+    }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .page-section {
+      position: relative;
+      width: 100%;
+      padding: clamp(42px, 8vw, 86px) clamp(28px, 9vw, 90px);
+      text-align: center;
+      isolation: isolate;
+    }
+    .page-section::before {
+      content: "";
+      position: absolute;
+      inset: 12px 7.5%;
+      border: 1px solid rgba(176,138,66,.18);
+      pointer-events: none;
+      z-index: -1;
+    }
+    .eyebrow {
+      margin: 0 0 12px;
+      color: #98743b;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      font-size: .82rem;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    .section-title {
+      color: var(--maroon);
+      font-size: clamp(2rem, 7vw, 3.5rem);
+      font-weight: 500;
+      margin: 0 0 12px;
+    }
+    .ornament {
+      width: min(180px, 42vw);
+      height: 1px;
+      margin: 18px auto 28px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .soft-card {
+      position: relative;
+      max-width: 650px;
+      margin: 22px auto;
+      padding: clamp(22px, 5vw, 42px);
+      border: 1px solid rgba(160,120,48,.35);
+      border-radius: 22px;
+      background: rgba(255,252,240,.42);
+      box-shadow: 0 12px 34px rgba(65,38,12,.12), inset 0 0 22px rgba(255,255,255,.25);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    .soft-card::after {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border: 1px solid rgba(176,138,66,.18);
+      border-radius: 16px;
+      pointer-events: none;
+    }
+
+    /* Opening: the video plays once, then its last frame is held on the canvas. */
+    .intro {
+      position: relative;
+      min-height: 100svh;
+      width: 100%;
+      overflow: hidden;
+      background: #2b0712;
+      display: grid;
+      place-items: center;
+      padding: 0;
+    }
+    .intro-media, .intro-freeze {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .intro-freeze { display: none; }
+    .intro-copy {
+      position: absolute;
+      z-index: 3;
+      left: 8%;
+      right: 8%;
+      top: 47%;
+      transform: translateY(-50%);
+      text-align: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 2s ease, visibility 2s ease;
+      color: #68451e;
+      text-shadow: 0 1px 1px rgba(255,255,255,.45);
+      pointer-events: none;
+    }
+    .intro-copy.visible { opacity: 1; visibility: visible; }
+    .intro-kicker { font-size: clamp(.9rem, 3vw, 1.2rem); letter-spacing: .24em; margin-bottom: 10px; }
+    .intro-copy h1 {
+      font-family: "Noto Serif Devanagari", "Cormorant Garamond", serif;
+      font-size: clamp(2.1rem, 9vw, 4.7rem);
+      line-height: 1.25;
+      margin: 0;
+      color: #805a24;
+      font-weight: 600;
+    }
+    .intro-copy .couple {
+      font-size: clamp(1.5rem, 6vw, 3rem);
+      margin: 10px 0;
+      color: #6a1728;
+    }
+    .intro-copy .intro-date { font-size: clamp(1rem, 3.5vw, 1.45rem); letter-spacing: .08em; }
+    .intro-hint {
+      position: absolute;
+      z-index: 5;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 1px solid rgba(239,220,173,.65);
+      border-radius: 999px;
+      padding: 10px 18px;
+      background: rgba(50,7,19,.62);
+      color: #fff3d4;
+      font: 14px Arial, sans-serif;
+      cursor: pointer;
+    }
+    .intro-hint.hidden { display: none; }
+
+    .names { font-family: "Noto Serif Devanagari", serif; color: var(--maroon); }
+    .name-line { font-size: clamp(1.9rem, 7vw, 3.2rem); margin: 8px 0; }
+    .parents { font-size: clamp(1rem, 3.6vw, 1.35rem); line-height: 1.9; color: #705533; }
+    .small-label { color: #9b793e; letter-spacing: .16em; font-size: .82rem; text-transform: uppercase; }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 9px;
+      max-width: 560px;
+      margin: 28px auto 0;
+    }
+    .time-box {
+      padding: 15px 5px;
+      border: 1px solid rgba(176,138,66,.45);
+      border-radius: 14px;
+      background: rgba(255,252,240,.55);
+      box-shadow: 0 7px 20px rgba(64,38,13,.09);
+    }
+    .time-box strong { display: block; font-size: clamp(1.7rem, 6vw, 2.6rem); color: var(--maroon); font-weight: 600; }
+    .time-box span { font: 10px Arial, sans-serif; letter-spacing: .1em; color: #866735; text-transform: uppercase; }
+
+    .events-wrap { position: relative; max-width: 100%; }
+    .events-track {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding: 10px 3px 22px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(176,138,66,.55) transparent;
+      -webkit-overflow-scrolling: touch;
+    }
+    .event-card {
+      flex: 0 0 min(76vw, 260px);
+      scroll-snap-align: center;
+      text-align: left;
+      min-height: 190px;
+      padding: 24px 22px;
+      border: 1px solid rgba(176,138,66,.45);
+      border-radius: 20px;
+      background: rgba(255,252,240,.72);
+      box-shadow: 0 10px 25px rgba(65,38,12,.10);
+    }
+    .event-card .event-number { color: #aa8547; font-size: .85rem; letter-spacing: .15em; }
+    .event-card h3 { color: var(--maroon); font-size: 1.8rem; margin: 12px 0 6px; }
+    .event-card p { margin: 0; line-height: 1.55; font-size: 1.1rem; }
+    .swipe-note { font: 12px Arial, sans-serif; color: #8c7046; margin-top: 4px; }
+
+    .detail-line { font-size: clamp(1.15rem, 4vw, 1.55rem); line-height: 1.8; margin: 8px 0; }
+    .action-link, .action-button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin: 12px 5px 0;
+      padding: 13px 22px;
+      border: 1px solid #a77e37;
+      border-radius: 999px;
+      background: var(--maroon);
+      color: #fff5dc;
+      text-decoration: none;
+      font: 14px Arial, sans-serif;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(75,8,27,.17);
+    }
+    .action-link.secondary, .action-button.secondary {
+      background: rgba(255,252,240,.65);
+      color: var(--maroon);
+    }
+
+    .scratch-area { max-width: 440px; margin: 26px auto 0; }
+    .scratch-heart {
+      position: relative;
+      width: min(78vw, 330px);
+      aspect-ratio: 1 / .88;
+      margin: 0 auto 18px;
+      filter: drop-shadow(0 12px 14px rgba(67,26,25,.18));
+    }
+    .scratch-heart .reveal-heart, .scratch-heart canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      clip-path: polygon(50% 91%, 43% 84%, 12% 55%, 5% 43%, 4% 31%, 8% 20%, 17% 12%, 29% 9%, 40% 13%, 50% 27%, 60% 13%, 71% 9%, 83% 12%, 92% 20%, 96% 31%, 95% 43%, 88% 55%, 57% 84%);
+    }
+    .reveal-heart {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      background: linear-gradient(145deg,#fff4d7,#e6d1a0);
+      border: 2px solid #b38b42;
+      padding: 24px;
+      color: var(--maroon);
+    }
+    .reveal-heart strong { font-family: "Noto Serif Devanagari",serif; font-size: clamp(1.15rem,4vw,1.65rem); }
+    .reveal-heart span { font-size: 1.05rem; margin-top: 8px; }
+    #scratchCanvas { touch-action: none; cursor: crosshair; }
+    .scratch-instruction { font-size: 1rem; color: #80643a; }
+
+    .permanent-date {
+      display: none;
+      max-width: 500px;
+      margin: 18px auto 0;
+      padding: 18px;
+      border: 1px solid rgba(176,138,66,.55);
+      border-radius: 16px;
+      background: rgba(255,252,240,.75);
+      color: var(--maroon);
+      animation: settle .9s ease both;
+    }
+    .permanent-date.show { display: block; }
+    .permanent-date strong { display: block; font-size: clamp(1.7rem,6vw,2.5rem); }
+    @keyframes settle { from {opacity:0; transform:translateY(12px)} to {opacity:1; transform:translateY(0)} }
+
+    .map-card { max-width: 620px; }
+    .map-pin { font-size: 2rem; margin-bottom: 6px; }
+    .closing {
+      min-height: 340px;
+      padding: 78px 24px 110px;
+      color: #f5e6c4;
+      background: radial-gradient(ellipse at top, #861c36 0%, var(--maroon) 48%, var(--maroon-dark) 100%);
+      text-align: center;
+    }
+    .closing::before { inset: 18px; border-color: rgba(225,190,119,.42); }
+    .closing h2 { color: #ead6a5; font-size: clamp(2.2rem,8vw,3.8rem); margin-bottom: 10px; font-weight: 500; }
+    .closing p { font-size: 1.2rem; color: #f6e9ce; }
+
+    .floating-actions {
+      position: fixed;
+      z-index: 50;
+      left: 12px;
+      right: 12px;
+      bottom: max(12px, env(safe-area-inset-bottom));
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+    .floating-actions a, .floating-actions button {
+      pointer-events: auto;
+      margin: 0;
+      padding: 11px 14px;
+      font-size: 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(238,213,162,.7);
+      background: rgba(76,8,27,.94);
+      color: #fff2d5;
+      text-decoration: none;
+      box-shadow: 0 5px 18px rgba(0,0,0,.2);
+      cursor: pointer;
+    }
+    .floating-actions button:disabled { opacity: .65; }
+    .footer-space { height: 65px; }
+
+    @media (min-width: 800px) {
+      .intro { min-height: 100vh; }
+      .page-section { padding-top: 90px; padding-bottom: 90px; }
+    }
+    @media (max-width: 380px) {
+      .page-section { padding-left: 23px; padding-right: 23px; }
+      .countdown-grid { gap: 6px; }
+      .time-box { padding: 12px 2px; }
+      .floating-actions a, .floating-actions button { padding: 10px 11px; font-size: 11px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- INTRO VIDEO: Replace assets/curtain-opening.mp4 with each customer's edited video. -->
+  <header class="intro" id="home">
+    <video class="intro-media" id="introVideo" autoplay muted playsinline preload="auto">
+      <source src="assets/curtain-opening.mp4" type="video/mp4">
+    </video>
+    <canvas class="intro-freeze" id="freezeCanvas" aria-label="Frozen final curtain frame"></canvas>
+
+    <!-- Text is a separate HTML layer, not embedded in the video. -->
+    <div class="intro-copy" id="introCopy">
+      <div class="intro-kicker">A CELEBRATION OF LOVE</div>
+      <h1>शुभ विवाह</h1>
+      <div class="couple names" id="heroNames">सुनील <span>♥</span> प्रिया</div>
+      <div class="intro-date" id="heroDate">2 December 2026 · 8:00 PM onwards</div>
+    </div>
+    <button class="intro-hint" id="playIntro" type="button">Open Invitation</button>
+  </header>
+
+  <main>
+    <section class="page-section" id="couple">
+      <p class="eyebrow">With the blessings of our families</p>
+      <h2 class="section-title">The Families</h2>
+      <div class="ornament"></div>
+      <div class="soft-card">
+        <div class="small-label">Groom</div>
+        <div class="name-line names" id="groomName">सुनील</div>
+        <div class="parents" id="groomParents">Son of [Groom's parents' names]</div>
+        <div class="ornament"></div>
+        <div class="small-label">Bride</div>
+        <div class="name-line names" id="brideName">प्रिया</div>
+        <div class="parents" id="brideParents">Daughter of [Bride's parents' names]</div>
+      </div>
+    </section>
+
+    <section class="page-section" id="countdown">
+      <p class="eyebrow">A beautiful beginning awaits</p>
+      <h2 class="section-title">Until We Say Forever</h2>
+      <div class="ornament"></div>
+      <div class="countdown-grid" aria-live="polite">
+        <div class="time-box"><strong id="days">--</strong><span>Days</span></div>
+        <div class="time-box"><strong id="hours">--</strong><span>Hours</span></div>
+        <div class="time-box"><strong id="minutes">--</strong><span>Minutes</span></div>
+        <div class="time-box"><strong id="seconds">--</strong><span>Seconds</span></div>
+      </div>
+    </section>
+
+    <section class="page-section" id="events">
+      <p class="eyebrow">Join us for every celebration</p>
+      <h2 class="section-title">Wedding Celebrations</h2>
+      <div class="ornament"></div>
+      <div class="events-wrap">
+        <div class="events-track" id="eventsTrack">
+          <article class="event-card"><span class="event-number">01 · CEREMONY</span><h3>Haldi</h3><p>[Add date]<br>[Add time and venue]</p></article>
+          <article class="event-card"><span class="event-number">02 · CEREMONY</span><h3>Sangeet</h3><p>[Add date]<br>[Add time and venue]</p></article>
+          <article class="event-card"><span class="event-number">03 · CEREMONY</span><h3>Sagai</h3><p>[Add date]<br>[Add time and venue]</p></article>
+          <article class="event-card"><span class="event-number">04 · CEREMONY</span><h3>Vidai</h3><p>[Add date]<br>[Add time and venue]</p></article>
+        </div>
+        <p class="swipe-note">← Swipe with your finger to explore the celebrations →</p>
+      </div>
+    </section>
+
+    <section class="page-section" id="celebration">
+      <p class="eyebrow">We request the pleasure of your company</p>
+      <h2 class="section-title">When & Where</h2>
+      <div class="ornament"></div>
+      <div class="soft-card">
+        <p class="detail-line"><strong id="weddingDateText">2 December 2026</strong></p>
+        <p class="detail-line" id="weddingTimeText">8:00 PM onwards</p>
+        <p class="detail-line" id="venueText">Royal Garden</p>
+        <p class="detail-line" id="addressText">Ghazipur, Uttar Pradesh, India</p>
+        <button class="action-button" id="addCalendar" type="button">＋ Add to Calendar</button>
+      </div>
+    </section>
+
+    <section class="page-section" id="scratch">
+      <p class="eyebrow">A little surprise for you</p>
+      <h2 class="section-title">Reveal the Date</h2>
+      <div class="ornament"></div>
+      <div class="scratch-area">
+        <div class="scratch-heart">
+          <div class="reveal-heart">
+            <div>
+              <strong>Our Wedding Day</strong>
+              <span id="scratchDate">2 December 2026</span>
+              <span>♥</span>
+            </div>
+          </div>
+          <canvas id="scratchCanvas" width="660" height="580" aria-label="Scratch the heart to reveal the wedding date"></canvas>
+        </div>
+        <p class="scratch-instruction" id="scratchInstruction">Gently scratch the heart with your finger to reveal our special date.</p>
+        <div class="permanent-date" id="permanentDate">
+          <span class="small-label">Save the date</span>
+          <strong id="permanentDateText">2 December 2026</strong>
+          <span id="permanentTimeText">8:00 PM onwards</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section" id="location">
+      <p class="eyebrow">We would love to celebrate with you</p>
+      <h2 class="section-title">Find the Venue</h2>
+      <div class="ornament"></div>
+      <div class="soft-card map-card">
+        <div class="map-pin">⌖</div>
+        <h3 class="section-title" style="font-size:2rem" id="mapVenue">Royal Garden</h3>
+        <p class="detail-line" id="mapAddress">Ghazipur, Uttar Pradesh, India</p>
+        <a class="action-link" id="directionsLink" href="https://www.google.com/maps/search/?api=1&query=Royal%20Garden%2C%20Ghazipur%2C%20Uttar%20Pradesh%2C%20India" target="_blank" rel="noopener">Get Directions ↗</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="closing" id="ending">
+    <p class="eyebrow" style="color:#e5c98e">Together with our families</p>
+    <h2>Celebrate With Us</h2>
+    <p>Your presence will make our day even more special.</p>
+    <div class="ornament" style="background:linear-gradient(90deg,transparent,#d7b66e,transparent)"></div>
+    <div class="names" style="color:#f1dfb8;font-size:1.8rem">सुनील ♥ प्रिया</div>
+    <p style="font-size:.95rem;margin-top:22px">With love and gratitude</p>
+  </footer>
+
+  <div class="footer-space"></div>
+
+  <!-- Fixed controls: design button bottom-left, music control bottom-right. -->
+  <nav class="floating-actions" aria-label="Quick actions">
+    <a href="mailto:your-email@example.com?subject=Design%20My%20Wedding%20Card" id="designButton">Design Your Own Card</a>
+    <button id="musicButton" type="button" aria-pressed="false">♫ Music Off</button>
+  </nav>
+  <audio id="backgroundMusic" loop preload="none"></audio>
+
+  <script>
+    /*
+      CUSTOMER CUSTOMIZATION:
+      Edit the values in this object for each invitation.
+      Keep dates in YYYY-MM-DDTHH:MM:SS+05:30 format.
+    */
+    const CARD = {
+      groomHindi: "सुनील",
+      brideHindi: "प्रिया",
+      groomParents: "Son of [Groom's parents' names]",
+      brideParents: "Daughter of [Bride's parents' names]",
+      weddingDateTime: "2026-12-02T20:00:00+05:30",
+      dateLabel: "2 December 2026",
+      timeLabel: "8:00 PM onwards",
+      venue: "Royal Garden",
+      address: "Ghazipur, Uttar Pradesh, India",
+      // Add a music file path here, for example: "assets/wedding-music.mp3"
+      musicFile: "",
+      // Change this to your own design/order page or WhatsApp link.
+      designLink: "mailto:your-email@example.com?subject=Design%20My%20Wedding%20Card"
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    function applyCardDetails() {
+      $("heroNames").innerHTML = `${CARD.groomHindi} <span>♥</span> ${CARD.brideHindi}`;
+      $("groomName").textContent = CARD.groomHindi;
+      $("brideName").textContent = CARD.brideHindi;
+      $("groomParents").textContent = CARD.groomParents;
+      $("brideParents").textContent = CARD.brideParents;
+      $("heroDate").textContent = `${CARD.dateLabel} · ${CARD.timeLabel}`;
+      $("weddingDateText").textContent = CARD.dateLabel;
+      $("weddingTimeText").textContent = CARD.timeLabel;
+      $("venueText").textContent = CARD.venue;
+      $("addressText").textContent = CARD.address;
+      $("scratchDate").textContent = CARD.dateLabel;
+      $("permanentDateText").textContent = CARD.dateLabel;
+      $("permanentTimeText").textContent = CARD.timeLabel;
+      $("mapVenue").textContent = CARD.venue;
+      $("mapAddress").textContent = CARD.address;
+      $("directionsLink").href = "https://www.google.com/maps/search/?api=1&query=" +
+        encodeURIComponent(`${CARD.venue}, ${CARD.address}`);
+      $("designButton").href = CARD.designLink;
+      if (CARD.musicFile) $("backgroundMusic").src = CARD.musicFile;
+    }
+
+    // Play the curtain video once. When it ends, capture and hold its exact final frame.
+    const video = $("introVideo");
+    const freezeCanvas = $("freezeCanvas");
+    const introCopy = $("introCopy");
+    const playIntro = $("playIntro");
+    let introFinished = false;
+
+    function freezeAtLastFrame() {
+      if (introFinished) return;
+      introFinished = true;
+      try {
+        freezeCanvas.width = video.videoWidth || 1080;
+        freezeCanvas.height = video.videoHeight || 1920;
+        const ctx = freezeCanvas.getContext("2d");
+        ctx.drawImage(video, 0, 0, freezeCanvas.width, freezeCanvas.height);
+        freezeCanvas.style.display = "block";
+        video.style.display = "none";
+      } catch (error) {
+        // If canvas capture is unavailable, the video remains on its final frame.
+        video.pause();
+      }
+      introCopy.classList.add("visible");
+      playIntro.classList.add("hidden");
+    }
+
+    video.addEventListener("ended", freezeAtLastFrame);
+    video.addEventListener("playing", () => playIntro.classList.add("hidden"));
+    video.addEventListener("error", () => {
+      playIntro.textContent = "Video unavailable — continue";
+      playIntro.classList.remove("hidden");
+    });
+
+    playIntro.addEventListener("click", async () => {
+      if (introFinished) {
+        introCopy.classList.add("visible");
+        playIntro.classList.add("hidden");
+        return;
+      }
+      try {
+        video.muted = true;
+        await video.play();
+        playIntro.classList.add("hidden");
+      } catch (error) {
+        // A browser may block autoplay; the visitor can tap this button to start.
+        playIntro.textContent = "Tap to play opening";
+      }
+    });
+
+    // Countdown uses the customer's local event timestamp.
+    function updateCountdown() {
+      const target = new Date(CARD.weddingDateTime).getTime();
+      const now = Date.now();
+      let remaining = Math.max(0, target - now);
+      const days = Math.floor(remaining / 86400000); remaining %= 86400000;
+      const hours = Math.floor(remaining / 3600000); remaining %= 3600000;
+      const minutes = Math.floor(remaining / 60000); remaining %= 60000;
+      const seconds = Math.floor(remaining / 1000);
+      $("days").textContent = days;
+      $("hours").textContent = String(hours).padStart(2, "0");
+      $("minutes").textContent = String(minutes).padStart(2, "0");
+      $("seconds").textContent = String(seconds).padStart(2, "0");
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // Add-to-calendar creates a local .ics file that guests can import.
+    $("addCalendar").addEventListener("click", () => {
+      const start = new Date(CARD.weddingDateTime);
+      const end = new Date(start.getTime() + 4 * 60 * 60 * 1000);
+      const toICS = (date) => date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+      const escapeICS = (text) => String(text).replace(/\\/g, "\\\\").replace(/,/g, "\\,").replace(/;/g, "\\;").replace(/\n/g, "\\n");
+      const ics = [
+        "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Wedding Smart Card//EN",
+        "CALSCALE:GREGORIAN", "BEGIN:VEVENT",
+        `UID:wedding-${start.getTime()}@smartcard`,
+        `DTSTAMP:${toICS(new Date())}`,
+        `DTSTART:${toICS(start)}`, `DTEND:${toICS(end)}`,
+        `SUMMARY:${escapeICS("Wedding of " + CARD.groomHindi + " & " + CARD.brideHindi)}`,
+        `LOCATION:${escapeICS(CARD.venue + ", " + CARD.address)}`,
+        "DESCRIPTION:We would love to celebrate with you.",
+        "END:VEVENT", "END:VCALENDAR"
+      ].join("\r\n");
+      const blob = new Blob([ics], {type: "text/calendar;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url; link.download = "wedding-invitation.ics";
+      document.body.appendChild(link); link.click(); link.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    // Heart-shaped scratch surface. Reveal stays permanently visible after the scratch threshold.
+    const scratchCanvas = $("scratchCanvas");
+    const scratchCtx = scratchCanvas.getContext("2d", { willReadFrequently: true });
+    let scratching = false;
+    let scratchRevealed = false;
+
+    function heartPath(ctx) {
+      ctx.beginPath();
+      ctx.moveTo(330, 500);
+      ctx.bezierCurveTo(280, 450, 40, 300, 40, 165);
+      ctx.bezierCurveTo(40, 25, 230, 5, 330, 130);
+      ctx.bezierCurveTo(430, 5, 620, 25, 620, 165);
+      ctx.bezierCurveTo(620, 300, 380, 450, 330, 500);
+      ctx.closePath();
+    }
+    function paintScratchCover() {
+      scratchCtx.clearRect(0,0,660,580);
+      scratchCtx.save();
+      heartPath(scratchCtx);
+      scratchCtx.clip();
+      const gradient = scratchCtx.createLinearGradient(0,0,660,580);
+      gradient.addColorStop(0, "#8b1d36");
+      gradient.addColorStop(.5, "#651026");
+      gradient.addColorStop(1, "#3d0715");
+      scratchCtx.fillStyle = gradient;
+      scratchCtx.fillRect(0,0,660,580);
+      scratchCtx.strokeStyle = "rgba(231,214,167,.85)";
+      scratchCtx.lineWidth = 5;
+      heartPath(scratchCtx);
+      scratchCtx.stroke();
+      scratchCtx.fillStyle = "#f2dfb6";
+      scratchCtx.textAlign = "center";
+      scratchCtx.font = "bold 43px Georgia";
+      scratchCtx.fillText("SCRATCH", 330, 270);
+      scratchCtx.font = "30px Georgia";
+      scratchCtx.fillText("♥", 330, 325);
+      scratchCtx.restore();
+    }
+    function pointFromEvent(event) {
+      const rect = scratchCanvas.getBoundingClientRect();
+      return {
+        x: (event.clientX - rect.left) * scratchCanvas.width / rect.width,
+        y: (event.clientY - rect.top) * scratchCanvas.height / rect.height
+      };
+    }
+    function scratchAt(event) {
+      if (scratchRevealed) return;
+      const point = pointFromEvent(event);
+      scratchCtx.save();
+      scratchCtx.globalCompositeOperation = "destination-out";
+      scratchCtx.beginPath();
+      scratchCtx.arc(point.x, point.y, 38, 0, Math.PI * 2);
+      scratchCtx.fill();
+      scratchCtx.restore();
+    }
+    function checkScratchProgress() {
+      if (scratchRevealed) return;
+      const pixels = scratchCtx.getImageData(0,0,scratchCanvas.width,scratchCanvas.height).data;
+      let transparent = 0, total = 0;
+      // Sample every 4th pixel to keep the check light on phones.
+      for (let y = 0; y < scratchCanvas.height; y += 4) {
+        for (let x = 0; x < scratchCanvas.width; x += 4) {
+          const dx = (x - 330) / 290, dy = (y - 250) / 245;
+          // Approximate heart-shaped region for progress calculation.
+          if (dx*dx + dy*dy < 1.12) {
+            total++;
+            if (pixels[(y * scratchCanvas.width + x) * 4 + 3] < 80) transparent++;
+          }
+        }
+      }
+      if (total && transparent / total >= 0.88) {
+        scratchRevealed = true;
+        scratchCanvas.style.transition = "opacity .8s ease";
+        scratchCanvas.style.opacity = "0";
+        setTimeout(() => { scratchCanvas.style.display = "none"; }, 850);
+        $("scratchInstruction").textContent = "The date is revealed. Save the date!";
+        $("permanentDate").classList.add("show");
+      }
+    }
+    paintScratchCover();
+    scratchCanvas.addEventListener("pointerdown", (event) => {
+      if (scratchRevealed) return;
+      scratching = true;
+      scratchCanvas.setPointerCapture(event.pointerId);
+      scratchAt(event);
+    });
+    scratchCanvas.addEventListener("pointermove", (event) => {
+      if (!scratching || scratchRevealed) return;
+      scratchAt(event);
+    });
+    function stopScratching() {
+      if (!scratching) return;
+      scratching = false;
+      checkScratchProgress();
+    }
+    scratchCanvas.addEventListener("pointerup", stopScratching);
+    scratchCanvas.addEventListener("pointercancel", stopScratching);
+    scratchCanvas.addEventListener("pointerleave", stopScratching);
+
+    // Optional music button: it becomes active when a music file is added in CARD.musicFile.
+    const music = $("backgroundMusic");
+    const musicButton = $("musicButton");
+    musicButton.addEventListener("click", async () => {
+      if (!CARD.musicFile) {
+        musicButton.textContent = "♫ Add Music File";
+        return;
+      }
+      if (music.paused) {
+        try { await music.play(); musicButton.textContent = "♫ Music On"; musicButton.setAttribute("aria-pressed","true"); }
+        catch (error) { musicButton.textContent = "♫ Tap Again"; }
+      } else {
+        music.pause(); musicButton.textContent = "♫ Music Off"; musicButton.setAttribute("aria-pressed","false");
+      }
+    });
+
+    applyCardDetails();
+  </script>
+</body>
+</html>
